@@ -1,29 +1,36 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import * as io from '@actions/io'
+import fs from 'fs/promises'
+import path from 'path'
+import { WORKSPACE_TEMPLATE_DIR } from './constant'
+import { prepareWorkspaceDirectory } from './prepare-workspace'
 
-/**
- * The main function for the action.
- * @returns {Promise<void>} Resolves when the action is complete.
- */
-export async function run(): Promise<void> {
+const run = async (): Promise<void> => {
+  const workspaceDir = process.cwd()
+  const inputBaseAppDir = core.getInput('appBaseDir')
+
   try {
-    const ms: string = core.getInput('milliseconds')
-
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
-
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    await prepareWorkspaceDirectory({
+      workspaceDir,
+      excludeDir:
+        typeof inputBaseAppDir === 'string' ? [inputBaseAppDir] : ['app']
+    })
+    const foldersInWorkspaceTemplate = await fs.readdir(WORKSPACE_TEMPLATE_DIR)
+    for (const templateFolder of foldersInWorkspaceTemplate) {
+      const templateFolderPath = path.join(
+        WORKSPACE_TEMPLATE_DIR,
+        templateFolder
+      )
+      core.info(`Copy ${templateFolder} from workspace template to workspace`)
+      io.cp(templateFolderPath, workspaceDir, {
+        force: true,
+        recursive: true
+      })
+    }
+    core.info('Setup workspace successfully')
   } catch (error) {
-    // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 run()

@@ -1,16 +1,16 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
+  "name": "setup-workspace",
+  "description": "Setup workspace action",
   "version": "0.0.0",
-  "author": "",
+  "author": "Tien Chau",
   "private": true,
-  "homepage": "https://github.com/actions/typescript-action",
+  "homepage": "https://github.com/gotecq/fe.actions.setup-workspace",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/gotecq/fe.actions.setup-workspace.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/typescript-action/issues"
+    "url": "https://github.com/gotecq/fe.actions.setup-workspace/issues"
   },
   "keywords": [
     "actions",
@@ -65,7 +65,8 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.10.1"
+    "@actions/core": "^1.10.1",
+    "@actions/io": "^1.1.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.4",
