@@ -20,10 +20,7 @@ const run = async (): Promise<void> => {
     })
 
     const foldersInWorkspaceTemplate = await fs.readdir(WORKSPACE_TEMPLATE_DIR)
-    core.debug(`
-      List folder in workspace: ${foldersInWorkspaceTemplate}
-      ${JSON.stringify(foldersInWorkspaceTemplate, null, 2)}
-    `)
+    core.debug(`List folder in WORKSPACE TEMPLATE: ${foldersInWorkspaceTemplate}`)
     for (const templateFolder of foldersInWorkspaceTemplate) {
       const templateFolderPath = path.join(
         WORKSPACE_TEMPLATE_DIR,

@@ -15,14 +15,14 @@ export const prepareWorkspaceDirectory = async ({
   try {
     core.info('Prepare workspace directory')
     const foldersInCurrentWorkspace = await fs.readdir(workspaceDir)
-    core.debug(JSON.stringify(foldersInCurrentWorkspace, null, 2))
+    core.debug(`List folder in WORKSPACE ${foldersInCurrentWorkspace}`)
 
     for (const folderInWorkspace of foldersInCurrentWorkspace) {
       // Skip exclude folder
       if (excludeDir?.includes(folderInWorkspace)) continue
 
       const folderPathInWorkspace = path.join(workspaceDir, folderInWorkspace)
-      core.debug(folderPathInWorkspace)
+      core.debug(`Removing ${folderPathInWorkspace}`)
       await io.rmRF(folderPathInWorkspace)
     }
   } catch (error) {
