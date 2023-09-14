@@ -3264,6 +3264,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const io = __importStar(__nccwpck_require__(436));
+const promises_1 = __importDefault(__nccwpck_require__(292));
 const path_1 = __importDefault(__nccwpck_require__(17));
 const constant_1 = __nccwpck_require__(336);
 const prepare_workspace_1 = __nccwpck_require__(720);
@@ -3277,7 +3278,7 @@ const run = async () => {
             workspaceDir,
             excludeDir: typeof inputBaseAppDir === 'string' ? [inputBaseAppDir] : ['app']
         });
-        const foldersInWorkspaceTemplate = await io.findInPath(constant_1.WORKSPACE_TEMPLATE_DIR);
+        const foldersInWorkspaceTemplate = await promises_1.default.readdir(constant_1.WORKSPACE_TEMPLATE_DIR);
         core.debug(JSON.stringify(foldersInWorkspaceTemplate, null, 2));
         for (const templateFolder of foldersInWorkspaceTemplate) {
             const templateFolderPath = path_1.default.join(constant_1.WORKSPACE_TEMPLATE_DIR, templateFolder);
@@ -3335,11 +3336,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.prepareWorkspaceDirectory = void 0;
 const core = __importStar(__nccwpck_require__(186));
 const io = __importStar(__nccwpck_require__(436));
+const promises_1 = __importDefault(__nccwpck_require__(292));
 const path_1 = __importDefault(__nccwpck_require__(17));
 const prepareWorkspaceDirectory = async ({ workspaceDir, excludeDir }) => {
     try {
         core.info('Prepare workspace directory');
-        const foldersInCurrentWorkspace = await io.findInPath(workspaceDir);
+        const foldersInCurrentWorkspace = await promises_1.default.readdir(workspaceDir);
         core.debug(JSON.stringify(foldersInCurrentWorkspace, null, 2));
         for (const folderInWorkspace of foldersInCurrentWorkspace) {
             // Skip exclude folder
@@ -3389,6 +3391,14 @@ module.exports = require("events");
 
 "use strict";
 module.exports = require("fs");
+
+/***/ }),
+
+/***/ 292:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs/promises");
 
 /***/ }),
 

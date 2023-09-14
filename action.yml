@@ -1,18 +1,11 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Setup workspace'
+description: 'Setup workspace to run and build FE apps'
+author: 'Tien Chau'
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
-    required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+  appBaseDir:
+    description: 'Base directory of current app. e.g. app/'
+    default: 'app'
 
 runs:
   using: node20

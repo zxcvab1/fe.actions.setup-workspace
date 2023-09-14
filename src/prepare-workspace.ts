@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as io from '@actions/io'
+import fs from 'fs/promises'
 import path from 'path'
 
 type PrepareWorkspaceDirectory = {
@@ -13,7 +14,7 @@ export const prepareWorkspaceDirectory = async ({
 }: PrepareWorkspaceDirectory): Promise<void> => {
   try {
     core.info('Prepare workspace directory')
-    const foldersInCurrentWorkspace = await io.findInPath(workspaceDir)
+    const foldersInCurrentWorkspace = await fs.readdir(workspaceDir)
     core.debug(JSON.stringify(foldersInCurrentWorkspace, null, 2))
 
     for (const folderInWorkspace of foldersInCurrentWorkspace) {
