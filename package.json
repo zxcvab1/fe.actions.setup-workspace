@@ -1,7 +1,7 @@
 {
   "name": "setup-workspace",
   "description": "Setup workspace action",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Tien Chau",
   "private": true,
   "homepage": "https://github.com/gotecq/fe.actions.setup-workspace",
