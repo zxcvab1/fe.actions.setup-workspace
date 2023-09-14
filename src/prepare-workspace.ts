@@ -19,7 +19,7 @@ export const prepareWorkspaceDirectory = async ({
 
     for (const folderInWorkspace of foldersInCurrentWorkspace) {
       // Skip exclude folder
-      if (!excludeDir?.includes(folderInWorkspace)) continue
+      if (excludeDir?.includes(folderInWorkspace)) continue
 
       const folderPathInWorkspace = path.join(workspaceDir, folderInWorkspace)
       core.debug(folderPathInWorkspace)

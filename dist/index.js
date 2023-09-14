@@ -3271,18 +3271,21 @@ const prepare_workspace_1 = __nccwpck_require__(720);
 const run = async () => {
     const workspaceDir = process.cwd();
     const inputBaseAppDir = core.getInput('appBaseDir');
-    core.debug(workspaceDir);
-    core.debug(inputBaseAppDir);
+    core.debug(`Workspace dir: ${workspaceDir}`);
+    core.debug(`Base app dir: ${inputBaseAppDir}`);
     try {
         await (0, prepare_workspace_1.prepareWorkspaceDirectory)({
             workspaceDir,
             excludeDir: typeof inputBaseAppDir === 'string' ? [inputBaseAppDir] : ['app']
         });
         const foldersInWorkspaceTemplate = await promises_1.default.readdir(constant_1.WORKSPACE_TEMPLATE_DIR);
-        core.debug(JSON.stringify(foldersInWorkspaceTemplate, null, 2));
+        core.debug(`
+      List folder in workspace: ${foldersInWorkspaceTemplate}
+      ${JSON.stringify(foldersInWorkspaceTemplate, null, 2)}
+    `);
         for (const templateFolder of foldersInWorkspaceTemplate) {
             const templateFolderPath = path_1.default.join(constant_1.WORKSPACE_TEMPLATE_DIR, templateFolder);
-            core.debug(templateFolderPath);
+            core.debug(`Template folder path: ${templateFolderPath}`);
             core.info(`Copy ${templateFolder} from workspace template to workspace`);
             await io.cp(templateFolderPath, workspaceDir, {
                 force: true,
@@ -3345,7 +3348,7 @@ const prepareWorkspaceDirectory = async ({ workspaceDir, excludeDir }) => {
         core.debug(JSON.stringify(foldersInCurrentWorkspace, null, 2));
         for (const folderInWorkspace of foldersInCurrentWorkspace) {
             // Skip exclude folder
-            if (!excludeDir?.includes(folderInWorkspace))
+            if (excludeDir?.includes(folderInWorkspace))
                 continue;
             const folderPathInWorkspace = path_1.default.join(workspaceDir, folderInWorkspace);
             core.debug(folderPathInWorkspace);
