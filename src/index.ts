@@ -8,6 +8,9 @@ const run = async (): Promise<void> => {
   const workspaceDir = process.cwd()
   const inputBaseAppDir = core.getInput('appBaseDir')
 
+  core.debug(workspaceDir)
+  core.debug(inputBaseAppDir)
+
   try {
     await prepareWorkspaceDirectory({
       workspaceDir,
@@ -18,11 +21,13 @@ const run = async (): Promise<void> => {
     const foldersInWorkspaceTemplate = await io.findInPath(
       WORKSPACE_TEMPLATE_DIR
     )
+    core.debug(JSON.stringify(foldersInWorkspaceTemplate, null, 2))
     for (const templateFolder of foldersInWorkspaceTemplate) {
       const templateFolderPath = path.join(
         WORKSPACE_TEMPLATE_DIR,
         templateFolder
       )
+      core.debug(templateFolderPath)
       core.info(`Copy ${templateFolder} from workspace template to workspace`)
       await io.cp(templateFolderPath, workspaceDir, {
         force: true,
